@@ -1,5 +1,6 @@
 package s4.B193374; // Please modify to s4.Bnnnnnn, where nnnnnn is your student ID. 
 import java.lang.*;
+import java.lang.Error.*;
 
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import s4.specification.*;
@@ -46,9 +47,10 @@ public class Frequencer implements FrequencerInterface{
     }
 
     // I know that here is a potential problem in the declaration.
-    public int subByteFrequency(int start, int length) throws NotImplementedException{ 
+    public int subByteFrequency(int start, int length) { //throws NotImplementedException{ 
 		// Not yet, but it is not currently used by anyone.
-		throw NotImplementedException;
+		//throw NotImplementedException;
+		return -1;
     }
 
     public static void main(String[] args) {

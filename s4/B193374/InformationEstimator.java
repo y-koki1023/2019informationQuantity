@@ -1,5 +1,6 @@
 package s4.B193374; // Please modify to s4.Bnnnnnn, where nnnnnn is your student ID. 
 import java.lang.*;
+import java.util.Arrays;
 import s4.specification.*;
 
 /* What is imported from s4.specification
@@ -7,7 +8,8 @@ package s4.specification;
 public interface InformationEstimatorInterface{
     void setTarget(byte target[]); // set the data for computing the information quantities
     void setSpace(byte space[]); // set data for sample space to computer probability
-    double estimation(); // It returns 0.0 when the target is not set or Target's length is zero;
+	double estimation(); 
+// It returns 0.0 when the target is not set or Target's length is zero;
 // It returns Double.MAX_VALUE, when the true value is infinite, or space is not set.
 // The behavior is undefined, if the true value is finete but larger than Double.MAX_VALUE.
 // Note that this happens only when the space is unreasonably large. We will encounter other problem anyway.
@@ -41,7 +43,11 @@ public class InformationEstimator implements InformationEstimatorInterface{
     }
 
     public double estimation(){
+		if(myTarget.equals(null) || myTarget.length == 0) return 0.0;
+		if(mySpace.equals(null)) return Double.MAX_VALUE;
+
 		boolean [] partition = new boolean[myTarget.length+1];
+
 		int np;
 		np = 1<<(myTarget.length-1);
 		// System.out.println("np="+np+" length="+myTarget.length);
@@ -53,6 +59,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 			// a b c d e f g   : myTarget
 			// T F T F F T F T : partition:
 			partition[0] = true; // I know that this is not needed, but..
+
 			for(int i=0; i<myTarget.length -1;i++) {
 				partition[i+1] = (0 !=((1<<i) & p));
 			}
