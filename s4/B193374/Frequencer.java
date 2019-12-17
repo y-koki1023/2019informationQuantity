@@ -28,7 +28,7 @@ public class Frequencer implements FrequencerInterface{
 	for(int start = 0; start<spaceLength; start++) { // Is it OK?
 	    boolean abort = false;
 	    for(int i = 0; i<targetLength; i++) {
-		if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
+			if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
 	    }
 	    if(abort == false) { count++; }
 	}
@@ -42,20 +42,19 @@ public class Frequencer implements FrequencerInterface{
     }
 
     public static void main(String[] args) {
-	Frequencer myObject;
-	int freq;
-	try {
-	    System.out.println("checking my Frequencer");
-	    myObject = new Frequencer();
-	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
-	    myObject.setTarget("H".getBytes());
-	    freq = myObject.frequency();
-	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
-	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-	}
-	catch(Exception e) {
-	    System.out.println("Exception occurred: STOP");
-	}
+		Frequencer myObject;
+		int freq;
+		try {
+			System.out.println("checking my Frequencer");
+			myObject = new Frequencer();
+			myObject.setSpace("Hi Ho Hi Ho".getBytes());
+			myObject.setTarget("H".getBytes());
+			freq = myObject.frequency();
+			System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
+			if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+		}catch(Exception e) {
+			System.out.println("Exception occurred: STOP");
+		}
     }
 }	    
 	    
