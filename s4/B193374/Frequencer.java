@@ -1,5 +1,7 @@
 package s4.B193374; // Please modify to s4.Bnnnnnn, where nnnnnn is your student ID. 
 import java.lang.*;
+
+import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import s4.specification.*;
 
 /*
@@ -17,10 +19,12 @@ interface FrequencerInterface {     // This interface provides the design for fr
 
 public class Frequencer implements FrequencerInterface{
 	// Code to Test, *warning: This code  contains intentional problem*
+	/*
 	public Frequencer(byte [] target, byte []space){
 		this.setTarget(target);
 		this.setSpace(space);
 	}
+	*/
     byte [] myTarget;
     byte [] mySpace;
     public void setTarget(byte [] target) { myTarget = target;}
@@ -30,11 +34,10 @@ public class Frequencer implements FrequencerInterface{
 		if(mySpace.equals(null) || mySpace.length == 0) return 0;
 		int targetLength = myTarget.length;
 		int spaceLength = mySpace.length;
-		
 		int count = 0;
-		for(int start = 0; start<spaceLength; start++) { // Is it OK?
+		for(int start = 0; start<spaceLength; start ++) { // Is it OK?
 			boolean abort = false;
-			for(int i = 0; i<targetLength; i++) {
+			for(int i = 0;  start + i < spaceLength && i< targetLength; i++) {
 				if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
 			}
 			if(abort == false) { count++; }
@@ -43,9 +46,9 @@ public class Frequencer implements FrequencerInterface{
     }
 
     // I know that here is a potential problem in the declaration.
-    public int subByteFrequency(int start, int length) { 
-	// Not yet, but it is not currently used by anyone.
-	return -1;
+    public int subByteFrequency(int start, int length) throws NotImplementedException{ 
+		// Not yet, but it is not currently used by anyone.
+		throw NotImplementedException;
     }
 
     public static void main(String[] args) {
