@@ -131,15 +131,23 @@ public class Frequencer implements FrequencerInterface {
 		// "Ho" = "H" : "H" is in the head of suffix "Ho"
 		//
 		// **** Please write code here... ***
-		//
-		return 0; // This line should be modified.
+		String suffix_i = new String(mySpace).substring(i);
+		String target_start_end = new String(myTarget).substring(start, end);
+
+		for (int index = 0; index < suffix_i.length() && index < target_start_end.length(); index++) {
+			if (suffix_i.charAt(index) > target_start_end.charAt(index))
+				return 1;
+			if (suffix_i.charAt(index) < target_start_end.charAt(index))
+				return -1;
+		}
+		return 0;
 	}
 
 	private int subByteStartIndex(int start, int end) {
 		// It returns the index of the first suffix which is equal or greater than
 		// subBytes;
 		// not implemented yet;
-		// If myTaget is "Hi Ho", start=0, end=2 means "Hi".
+		// If myTarget is "Hi Ho", start=0, end=2 means "Hi".
 		// For "Ho", it will return 5 for "Hi Ho Hi Ho".
 		// 5 means suffix_5,
 		// Please note suffix_5 is "Ho" and "Ho" starts from here.
@@ -149,7 +157,12 @@ public class Frequencer implements FrequencerInterface {
 		//
 		// **** Please write code here... ***
 		//
-		return suffixArray.length; // This line should be modified.
+		for (int i = 0; i < suffixArray.length; i++) {
+			if (targetCompare(suffixArray[i], start, end) == 0) {
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	private int subByteEndIndex(int start, int end) {
@@ -164,6 +177,12 @@ public class Frequencer implements FrequencerInterface {
 		//
 		// **** Please write code here... ***
 		//
+		int firstIndex = subByteStartIndex(start, end);
+		for (int i = firstIndex; i < suffixArray.length; i++) {
+			if (targetCompare(suffixArray[i], start, end) != 0) {
+				return i;
+			}
+		}
 		return suffixArray.length; // This line should be modified.
 	}
 
@@ -208,6 +227,10 @@ public class Frequencer implements FrequencerInterface {
 			frequencerObject.setTarget("H".getBytes());
 			//
 			// **** Please write code to check subByteStartIndex, and subByteEndIndex
+			int startIndex = frequencerObject.subByteStartIndex(0, 1);
+			int endIndex = frequencerObject.subByteEndIndex(0, 1);
+
+			System.out.println("Start: " + startIndex + " End:" + endIndex);
 			//
 
 			int result = frequencerObject.frequency();
