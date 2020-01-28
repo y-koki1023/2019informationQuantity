@@ -1,8 +1,8 @@
-package s4.B193374;
+package s4.umemura;
 import java.lang.*;
 
 public class Hello {
     public static void main(String[] args) {
-	    System.out.println("hello..(:poop:)");
+	System.out.println("hello..(buggy)");
     }
 }
