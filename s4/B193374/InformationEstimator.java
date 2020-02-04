@@ -82,8 +82,7 @@ public class InformationEstimator implements InformationEstimatorInterface {
 			while (start < myTarget.length) {
 				// System.out.write(myTarget[end]);
 				end++;
-				;
-				while (!partition[end] == false) {
+				while (partition[end] == false) {
 					// System.out.write(myTarget[end]);
 					end++;
 				}

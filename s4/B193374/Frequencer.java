@@ -56,10 +56,9 @@ public class Frequencer implements FrequencerInterface {
 		// suffix_i suffix_j
 		// "i" < "o" : compare by code
 		// "Hi" < "Ho" ; if head is same, compare the next element
-		// "Ho" < "Ho " ; if the prefix is identical, longer string is big
+		// "Ho" = "Ho" ; if the prefix is identical, longer string is big
 		//
 		// **** Please write code here... ***
-		String str = new String(mySpace);
 
 		/*
 		 * for (int index = 0; i + index < mySpace.length && j + index < mySpace.length;
@@ -68,6 +67,7 @@ public class Frequencer implements FrequencerInterface {
 		 * return -1; } }
 		 */
 
+		String str = new String(mySpace);
 		String suffix_i = str.substring(i);
 		String suffix_j = str.substring(j);
 
@@ -130,9 +130,16 @@ public class Frequencer implements FrequencerInterface {
 		// "Ho" < "Ho " : "Ho " is not in the head of suffix "Ho"
 		// "Ho" = "H" : "H" is in the head of suffix "Ho"
 		//
+		// AAA AA
+		// A AA
+
 		// **** Please write code here... ***
 		String suffix_i = new String(mySpace).substring(i);
 		String target_start_end = new String(myTarget).substring(start, end);
+
+		if (suffix_i.length() < target_start_end.length()) {
+			return 1;
+		}
 
 		for (int index = 0; index < suffix_i.length() && index < target_start_end.length(); index++) {
 			if (suffix_i.charAt(index) > target_start_end.charAt(index))
@@ -217,14 +224,16 @@ public class Frequencer implements FrequencerInterface {
 		Frequencer frequencerObject;
 		try {
 			frequencerObject = new Frequencer();
-			frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
+			// frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
+			frequencerObject.setSpace("AAA".getBytes());
 			frequencerObject.printSuffixArray(); // you may use this line for DEBUG
 			/*
 			 * Example from "Hi Ho Hi Ho" 0: Hi Ho 1: Ho 2: Ho Hi Ho 3:Hi Ho 4:Hi Ho Hi Ho
 			 * 5:Ho 6:Ho Hi Ho 7:i Ho 8:i Ho Hi Ho 9:o A:o Hi Ho
 			 */
 
-			frequencerObject.setTarget("H".getBytes());
+			// frequencerObject.setTarget("H".getBytes());
+			frequencerObject.setTarget("AA".getBytes());
 			//
 			// **** Please write code to check subByteStartIndex, and subByteEndIndex
 			int startIndex = frequencerObject.subByteStartIndex(0, 1);
