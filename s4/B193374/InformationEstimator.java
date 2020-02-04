@@ -1,4 +1,4 @@
-package s4.umemura; // Please modify to s4.Bnnnnnn, where nnnnnn is your student ID. 
+package s4.B193374; // Please modify to s4.Bnnnnnn, where nnnnnn is your student ID. 
 
 import java.lang.*;
 import java.util.HashMap;
@@ -90,6 +90,7 @@ public class InformationEstimator implements InformationEstimatorInterface {
 				// System.out.print("("+start+","+end+")");
 				myFrequencer.setTarget(subBytes(myTarget, start, end));
 				String hogeMAPDPKey = new String(subBytes(myTarget, start, end));
+
 				if (!hogeMapDP.containsKey(hogeMAPDPKey)) {
 					hogeMapDP.put(hogeMAPDPKey, iq(myFrequencer.frequency()));
 				}
