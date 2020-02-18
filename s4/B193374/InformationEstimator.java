@@ -23,6 +23,8 @@ public class InformationEstimator implements InformationEstimatorInterface {
 	byte[] myTarget; // data to compute its information quantity
 	byte[] mySpace; // Sample space to compute the probability
 	FrequencerInterface myFrequencer; // Object for counting frequency
+	// HashMap<int, Double> hogeMapDP = new HashMap<int, Double>();
+	double iqdp[];
 
 	byte[] subBytes(byte[] x, int start, int end) {
 		// corresponding to substring of String for byte[] ,
@@ -32,17 +34,25 @@ public class InformationEstimator implements InformationEstimatorInterface {
 		for (int i = 0; i < end - start; i++) {
 			result[i] = x[start + i];
 		}
-		;
 		return result;
 	}
 
 	// IQ: information quantity for a count, -log2(count/sizeof(space))
-	double iq(int freq) {
-		return -Math.log10((double) freq / (double) mySpace.length) / Math.log10((double) 2.0);
+	double iq(byte[] str) {
+		if (iqdp[str.length - 1] != -1)
+			return iqdp[str.length - 1];
+		double value = f(str);
+		for (int i = 1; i < str.length; i++) {
+			double value1 = iq(subBytes(str, 0, i)) + f(subBytes(str, i, str.length));
+			value = Math.min(value, value1);
+		}
+		iqdp[str.length - 1] = value;
+		return value;
 	}
 
 	public void setTarget(byte[] target) {
 		myTarget = target;
+		iqdp = new double[myTarget.length];
 	}
 
 	public void setSpace(byte[] space) {
@@ -54,55 +64,18 @@ public class InformationEstimator implements InformationEstimatorInterface {
 	/*
 	 * Space : 3210321001230123 Target : 0
 	 */
+
 	public double estimation() {
-		HashMap<String, Double> hogeMapDP = new HashMap<String, Double>();
-		boolean[] partition = new boolean[myTarget.length + 1]; // boolean [2]
-		int np;
-		np = 1 << (myTarget.length - 1); // 10
-		// System.out.println("np="+np+" length="+myTarget.length);
-		double value = Double.MAX_VALUE; // value = mininimum of each "value1".
-
-		for (int p = 0; p < np; p++) { // There are 2^(n-1) kinds of partitions.
-			// binary representation of p forms partition.
-			// for partition {"ab" "cde" "fg"}
-			// a b c d e f g : myTarget
-			// T F T F F T F T : partition:
-			partition[0] = true; // I know that this is not needed, but..
-			for (int i = 0; i < myTarget.length - 1; i++) {
-				partition[i + 1] = (0 != ((1 << i) & p));
-			}
-			partition[myTarget.length] = true;
-
-			// Compute Information Quantity for the partition, in "value1"
-			// value1 = IQ(#"ab")+IQ(#"cde")+IQ(#"fg") for the above example
-			double value1 = (double) 0.0;
-			int end = 0;
-			;
-			int start = end;
-			while (start < myTarget.length) {
-				// System.out.write(myTarget[end]);
-				end++;
-				while (partition[end] == false) {
-					// System.out.write(myTarget[end]);
-					end++;
-				}
-				// System.out.print("("+start+","+end+")");
-				myFrequencer.setTarget(subBytes(myTarget, start, end));
-				String hogeMAPDPKey = new String(subBytes(myTarget, start, end));
-
-				if (!hogeMapDP.containsKey(hogeMAPDPKey)) {
-					hogeMapDP.put(hogeMAPDPKey, iq(myFrequencer.frequency()));
-				}
-				value1 = value1 + hogeMapDP.get(hogeMAPDPKey);
-				start = end;
-			}
-			// System.out.println(" "+ value1);
-
-			// Get the minimal value in "value"
-			if (value1 < value)
-				value = value1;
+		for (int i = 0; i < iqdp.length; i++) {
+			iqdp[i] = -1;
 		}
-		return value;
+		return iq(myTarget);
+	}
+
+	private double f(byte[] str) {
+		myFrequencer.setTarget(str);
+		int freq = myFrequencer.frequency();
+		return -Math.log10((double) freq / (double) mySpace.length) / Math.log10((double) 2.0);
 	}
 
 	public static void main(String[] args) {
