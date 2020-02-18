@@ -137,15 +137,14 @@ public class Frequencer implements FrequencerInterface {
 		String suffix_i = new String(mySpace).substring(i);
 		String target_start_end = new String(myTarget).substring(start, end);
 
-		if (suffix_i.length() < target_start_end.length()) {
-			return 1;
-		}
-
 		for (int index = 0; index < suffix_i.length() && index < target_start_end.length(); index++) {
 			if (suffix_i.charAt(index) > target_start_end.charAt(index))
 				return 1;
 			if (suffix_i.charAt(index) < target_start_end.charAt(index))
 				return -1;
+		}
+		if (suffix_i.length() < target_start_end.length()) {
+			return 1;
 		}
 		return 0;
 	}
